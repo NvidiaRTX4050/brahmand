@@ -5,27 +5,40 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Portfolio Placeholder</title>
 
-  <!-- Font and Base Styles -->
   <style>
+    :root {
+      --bg: #fff;
+      --text: #1d1d1f;
+    }
+
     body {
       margin: 0;
       height: 100vh;
-      background: #fff;
+      background: var(--bg);
       display: flex;
       justify-content: center;
       align-items: center;
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      transition: background 0.6s ease, color 0.6s ease;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     }
 
     h1 {
       font-size: 3rem;
       font-weight: 600;
       letter-spacing: -0.02em;
-      color: #1d1d1f;
+      color: var(--text);
       margin: 0;
       opacity: 0;
       transform: translateY(20px);
       animation: fadeInUp 0.8s ease-out forwards;
+      transition: color 0.6s ease;
+      user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
     }
 
     @keyframes fadeInUp {
@@ -49,6 +62,12 @@
         transform: translateY(20px);
       }
     }
+
+    /* Dark mode variables */
+    .dark {
+      --bg: #000;
+      --text: #f5f5f7;
+    }
   </style>
 </head>
 <body>
@@ -56,31 +75,47 @@
 
   <script>
     const phrases = [
-      "Crafting ideas.",
-      "Building with purpose.",
-      "Designed to create.",
-      "Ideas made real.",
-      "Let’s build something great."
-    ];
+  "You have the right to work, not to the fruits.",
+  "Be steady in success and failure.",
+  "Rise above dualities.",
+  "Let your mind be undisturbed.",
+  "Perform your duty with discipline.",
+  "Peace comes from within.",
+  "Detach. Act. Grow.",
+  "Do not waver in uncertainty."
+];
+
 
     let index = 0;
     const textElement = document.getElementById('text');
 
     setInterval(() => {
-      // Fade out
       textElement.classList.remove('fade-in');
       textElement.classList.add('fade-out');
 
       setTimeout(() => {
-        // Change text
         index = (index + 1) % phrases.length;
         textElement.textContent = phrases[index];
 
-        // Fade in
         textElement.classList.remove('fade-out');
         textElement.classList.add('fade-in');
-      }, 500); // match fade-out duration
-    }, 3000); // change every 3 seconds
+      }, 500);
+    }, 3000);
+
+    let darkMode = false;
+    let isTransitioning = false;
+
+    document.body.addEventListener('click', () => {
+      if (isTransitioning) return;
+      isTransitioning = true;
+
+      darkMode = !darkMode;
+      document.body.classList.toggle('dark', darkMode);
+
+      setTimeout(() => {
+        isTransitioning = false;
+      }, 600);
+    });
   </script>
 </body>
 </html>
