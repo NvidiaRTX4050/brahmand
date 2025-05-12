@@ -1,64 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Rain - Devanagari</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { background: black; overflow: hidden; }
-        canvas { display: block; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio Placeholder</title>
+
+  <!-- Font and Base Styles -->
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: #1d1d1f;
+      margin: 0;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    @keyframes fadeInUp {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-out {
+      animation: fadeOutDown 0.5s ease-out forwards;
+    }
+
+    .fade-in {
+      animation: fadeInUp 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeOutDown {
+      to {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+    }
+  </style>
 </head>
 <body>
-    <canvas id="matrixCanvas"></canvas>
+  <h1 id="text">Crafting ideas.</h1>
 
-    <script>
-        // Initialize canvas
-        var canvas = document.getElementById("matrixCanvas"),
-            ctx = canvas.getContext("2d");
+  <script>
+    const phrases = [
+      "Crafting ideas.",
+      "Building with purpose.",
+      "Designed to create.",
+      "Ideas made real.",
+      "Let’s build something great."
+    ];
 
-        // Set canvas dimensions
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    let index = 0;
+    const textElement = document.getElementById('text');
 
-        // Devanagari characters
-        var letters = "अआइईउऊऋएऐओऔकखगघचछजझटठडढणतथदधनपफबभमयरलवशषस".split("");
+    setInterval(() => {
+      // Fade out
+      textElement.classList.remove('fade-in');
+      textElement.classList.add('fade-out');
 
-        // Set font size and columns
-        var fontSize = 18,
-            columns = Math.floor(canvas.width / fontSize),
-            drops = Array(columns).fill(1);
+      setTimeout(() => {
+        // Change text
+        index = (index + 1) % phrases.length;
+        textElement.textContent = phrases[index];
 
-        // Draw the animation
-        function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = "#0f0"; // Green color
-            ctx.font = fontSize + "px monospace";
-
-            drops.forEach((y, x) => {
-                var text = letters[Math.floor(Math.random() * letters.length)];
-                ctx.fillText(text, x * fontSize, y * fontSize);
-
-                if (y * fontSize > canvas.height && Math.random() > 0.95) {
-                    drops[x] = 0;
-                }
-                drops[x]++;
-            });
-        }
-
-        // Run animation loop
-        setInterval(draw, 50);
-
-        // Resize canvas on window resize
-        window.addEventListener("resize", () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-            columns = Math.floor(canvas.width / fontSize);
-            drops = Array(columns).fill(1);
-        });
-    </script>
+        // Fade in
+        textElement.classList.remove('fade-out');
+        textElement.classList.add('fade-in');
+      }, 500); // match fade-out duration
+    }, 3000); // change every 3 seconds
+  </script>
 </body>
 </html>
